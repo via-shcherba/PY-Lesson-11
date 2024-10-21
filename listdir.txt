@@ -1,0 +1,2 @@
+files: .gitattributes, balance.txt, bank_account.py, file1.txt, file2.txt, file_operations.py, listdir.txt, main.py, purchase_history.txt, quiz.py, system_info.py, test_filemanager.py, test_python.py
+dirs: .git, bank, dir1, dir2, __pycache__

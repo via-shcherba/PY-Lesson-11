@@ -123,7 +123,38 @@ class TestFileOperations(unittest.TestCase):
         output = mock_stdout.getvalue()
         expected_output = "Создатель программы: via.shcherba\n"
         self.assertEqual(output, expected_output)
+        
+    def test_save_directory_contents_to_file(self):
+        test_files = ['file1.txt', 'file2.txt']
+        test_dirs = ['dir1', 'dir2']
+        
+        for file in test_files:
+            with open(file, 'w') as f:
+                f.write("This is a test file.")
 
+        for dir in test_dirs:
+            os.mkdir(dir)
+
+        save_directory_contents_to_file()
+        self.assertTrue(os.path.exists('listdir.txt'))
+
+        with open('listdir.txt', 'r') as f:
+            content = f.readlines()
+
+        self.assertEqual(len(content), 2)  
+        self.assertTrue(content[0].startswith("files: "))  
+        self.assertTrue(content[1].startswith("dirs: "))  
+
+        expected_files = ', '.join(test_files)
+        self.assertIn(expected_files, content[0])
+
+        expected_dirs = ', '.join(test_dirs)
+        self.assertIn(expected_dirs, content[1])
+        
+        for file in test_files:
+            delete(file)
+        for dir in test_dirs:
+            delete(dir)
 
 if __name__ == '__main__':
     unittest.main()
