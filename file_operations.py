@@ -8,6 +8,9 @@ def create_folder():
 
 def delete_item():
     item_name = input("Введите название файла/папки для удаления: ")
+    delete(item_name)
+        
+def delete(item_name):
     try:
         if os.path.isdir(item_name):
             os.rmdir(item_name)
@@ -53,3 +56,13 @@ def change_working_directory():
         print(f"Рабочая директория изменена на: {os.getcwd()}")
     except Exception as e:
         print(f"Ошибка при изменении директории: {e}")
+        
+def save_directory_contents_to_file():
+    files = [item for item in os.listdir() if os.path.isfile(item)]
+    dirs = [item for item in os.listdir() if os.path.isdir(item)]
+
+    with open('listdir.txt', 'w') as f:
+        f.write("files: " + ", ".join(files) + "\n")
+        f.write("dirs: " + ", ".join(dirs) + "\n")
+
+    print("Содержимое рабочей директории сохранено в 'listdir.txt'.")

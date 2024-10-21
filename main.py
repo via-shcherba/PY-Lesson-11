@@ -1,4 +1,4 @@
-from file_operations import create_folder, delete_item, copy_item, list_directory_contents, list_directories, list_files, change_working_directory
+from file_operations import create_folder, delete_item, copy_item, list_directory_contents, list_directories, list_files, change_working_directory, save_directory_contents_to_file
 from system_info import os_info, program_creator
 from quiz import play_quiz
 from bank_account import bank_account
@@ -16,8 +16,9 @@ def main_menu():
         print("8. Создатель программы")
         print("9. Играть в викторину")
         print("10. Мой банковский счет")
-        print("11. Смена рабочей директории")
-        print("12. Выход")
+        print("11. Сохранить содержимое рабочей директории в файл")
+        print("12. Смена рабочей директории")
+        print("13. Выход")
 
         choice = input("Выберите пункт меню: ")
 
@@ -42,8 +43,10 @@ def main_menu():
         elif choice == '10':
             bank_account()
         elif choice == '11':
-            change_working_directory()
+            save_directory_contents_to_file()
         elif choice == '12':
+            change_working_directory()
+        elif choice == '13':
             print("Выход из программы.")
             break
         else:
