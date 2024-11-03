@@ -1,7 +1,39 @@
 balance = 0.0
 purchase_history = []
 
-def main_menu():   
+def load_balance():
+    try:
+        with open('balance.txt', 'r') as file:
+            return float(file.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0.0  # Возвращаем 0.0, если файл не найден или некорректный формат
+
+def save_balance():
+    with open('balance.txt', 'w') as file:
+        file.write(f'{balance:.2f}')
+
+def load_purchase_history():
+    try:
+        with open('purchase_history.txt', 'r') as file:
+            for line in file:
+                if len(line) > 1:
+                    item, amount = line.strip().split(': ')
+                    purchase_history.append((item, float(amount)))
+    except FileNotFoundError:
+        pass  
+
+def save_purchase_history():
+    with open('purchase_history.txt', 'w') as file:
+        for item, amount in purchase_history:
+            file.write(f'{item}: {amount:.2f}\n')
+
+def main_menu():
+    global balance
+    balance = load_balance()  # Загружаем баланс при старте
+    load_purchase_history()  # Загружаем историю покупок при старте
+
+    print(f'Ваш текущий баланс: {balance:.2f}')  # Показываем баланс при открытии программы
+
     while True:
         print('\n1. Пополнение счета')
         print('2. Покупка')
@@ -9,7 +41,7 @@ def main_menu():
         print('4. Выход')
 
         choice = input('Выберите пункт меню: ')
-        
+
         if choice == '1':
             deposit()
         elif choice == '2':
@@ -17,6 +49,8 @@ def main_menu():
         elif choice == '3':
             show_purchase_history()
         elif choice == '4':
+            save_balance()  # Сохраняем баланс перед выходом
+            save_purchase_history()  # Сохраняем историю перед выходом
             print('Выход из программы.')
             break
         else:
@@ -60,4 +94,5 @@ def show_purchase_history():
 def bank_account():
     print("Запуск банковского счёта...")
     main_menu()
-    
+
+bank_account() 
